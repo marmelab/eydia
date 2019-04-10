@@ -1,0 +1,16 @@
+{
+  "name": "@eydia/api",
+  "version": "0.0.1",
+  "main": "index.js",
+  "contributors": [
+    "Gildas Garcia <gildas.garcia@gmail.com>"
+  ],
+  "license": "MIT",
+  "scripts": {
+    "precommit": "lint-staged",
+    "lint": "eslint --fix"
+  },
+  "lint-staged": {
+    "src/**/*.js": ["yarn run lint", "git add"]
+  }
+}
