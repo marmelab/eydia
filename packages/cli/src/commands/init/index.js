@@ -15,31 +15,35 @@ const initialState = {
 };
 
 const initReducer = (state, action) => {
-    if (action.type === 'set-project-name') {
-        return {
-            ...state,
-            step: 'gathering-dependencies',
-            projectName: action.payload,
-        };
-    }
+    switch (action.type) {
+        case 'set-project-name': {
+            return {
+                ...state,
+                step: 'gathering-dependencies',
+                projectName: action.payload,
+            };
+        }
 
-    if (action.type === 'update-project') {
-        return {
-            ...state,
-            step: 'updating-project',
-            dependencies: action.payload,
-        };
-    }
+        case 'update-project': {
+            return {
+                ...state,
+                step: 'updating-project',
+                dependencies: action.payload,
+            };
+        }
 
-    if (action.type === 'success') {
-        return {
-            ...state,
-            step: 'exit',
-            link: action.payload,
-        };
-    }
+        case 'success': {
+            return {
+                ...state,
+                step: 'exit',
+                link: action.payload,
+            };
+        }
 
-    return state;
+        default: {
+            return state;
+        }
+    }
 };
 
 const handleWelcomeStep = async (dispatch, projectRoot) => {

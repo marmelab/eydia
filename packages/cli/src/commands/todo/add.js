@@ -43,16 +43,20 @@ const todoReducer = (state, action) => {
 };
 
 const handleActions = async (state, dispatch, onExit) => {
-    if (state.step === 'saving-todo') {
-        const link = await addTodo(state.title);
-        dispatch({
-            type: 'success',
-            payload: link,
-        });
-    }
+    switch (state.step) {
+        case 'saving-todo': {
+            const link = await addTodo(state.title);
+            dispatch({
+                type: 'success',
+                payload: link,
+            });
+            return;
+        }
 
-    if (state.step === 'exit') {
-        onExit();
+        case 'exit': {
+            onExit();
+            return;
+        }
     }
 };
 
@@ -69,43 +73,47 @@ const AddTodo = ({ args, onExit }) => {
         handleActions(state, dispatch, onExit);
     }, [state]);
 
-    if (state.step === 'ask-title') {
-        return (
-            <Box flexDirection="column">
-                <Box>Enter your todo title:</Box>
+    switch (state.step) {
+        case 'ask-title': {
+            return (
+                <Box flexDirection="column">
+                    <Box>Enter your todo title:</Box>
 
-                <TextInput
-                    value={state.title}
-                    onChange={handleSetTitle}
-                    onSubmit={handleAddTodo}
-                />
-            </Box>
-        );
+                    <TextInput
+                        value={state.title}
+                        onChange={handleSetTitle}
+                        onSubmit={handleAddTodo}
+                    />
+                </Box>
+            );
+        }
+
+        case 'saving-todo': {
+            return (
+                <Box>
+                    <Color green>
+                        <Spinner type="dots" />
+                    </Color>
+                    <Box paddingLeft={1}>Saving your todo item...</Box>
+                </Box>
+            );
+        }
+
+        case 'exit': {
+            return (
+                <Box>
+                    <Color green>Todo saved!</Color> Open it now with this{' '}
+                    <Color cyan>
+                        <Link url={state.link}>link</Link>
+                    </Color>
+                </Box>
+            );
+        }
+
+        default: {
+            return <UnknownCommand />;
+        }
     }
-
-    if (state.step === 'saving-todo') {
-        return (
-            <Box>
-                <Color green>
-                    <Spinner type="dots" />
-                </Color>
-                <Box paddingLeft={1}>Saving your todo item...</Box>
-            </Box>
-        );
-    }
-
-    if (state.step === 'exit') {
-        return (
-            <Box>
-                <Color green>Todo saved!</Color> Open it now with this{' '}
-                <Color cyan>
-                    <Link url={state.link}>link</Link>
-                </Color>
-            </Box>
-        );
-    }
-
-    return <UnknownCommand />;
 };
 
 export default AddTodo;
