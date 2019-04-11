@@ -3,7 +3,7 @@
         "eslint:recommended",
         "prettier"
     ],
-    "plugins": ["prettier"],
+    "plugins": ["prettier", "jest"],
     "parserOptions": {
         "ecmaVersion": 2018,
         "sourceType": "module"
@@ -11,7 +11,8 @@
     "env": {
         "browser": true,
         "es6": true,
-        "node": true
+        "node": true,
+        "jest/globals": true
     },
     "rules": {
         "prettier/prettier": "error",

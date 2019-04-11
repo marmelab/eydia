@@ -9,7 +9,8 @@
   "scripts": {
     "build": "babel src --out-dir dist",
     "precommit": "lint-staged",
-    "lint": "eslint --fix"
+    "lint": "eslint --fix",
+    "test": "jest"
   },
   "lint-staged": {
     "src/**/*.js": [
@@ -18,23 +19,28 @@
     ]
   },
   "dependencies": {
-    "@babel/plugin-proposal-object-rest-spread": "^7.4.3",
     "debug": "^4.1.1",
+    "eslint": "^5.16.0",
     "ink": "^2.1.1",
-    "ink-box": "1.0.0",
+    "ink-box": "^1.0.0",
     "ink-link": "^1.0.0",
-    "ink-spinner": "3.0.0",
-    "ink-text-input": "3.1.0",
-    "meow": "5.0.0",
+    "ink-spinner": "^3.0.0",
+    "ink-text-input": "^3.1.0",
+    "meow": "^5.0.0",
     "react": "^16.8.6",
     "uuid": "^3.3.2"
   },
   "devDependencies": {
-    "@babel/cli": "7.4.3",
-    "@babel/core": "7.4.3",
-    "@babel/preset-env": "7.4.3",
-    "@babel/preset-react": "7.0.0",
-    "eslint-plugin-react": "7.12.4",
-    "ink-testing-library": "^1.0.1"
+    "@babel/cli": "^7.4.3",
+    "@babel/core": "^7.4.3",
+    "@babel/plugin-proposal-object-rest-spread": "^7.4.3",
+    "@babel/preset-env": "^7.4.3",
+    "@babel/preset-react": "^7.0.0",
+    "babel-jest": "24.7.1",
+    "eslint-plugin-jest": "^22.4.1",
+    "eslint-plugin-react": "^7.12.4",
+    "ink-testing-library": "^1.0.1",
+    "jest": "^24.7.1",
+    "react-test-renderer": "16.8.6"
   }
 }

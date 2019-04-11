@@ -1,0 +1,16 @@
+language: node_js
+sudo: required
+node_js:
+  - 'lts/*'
+env:
+  global:
+    - NODE_ENV=test
+dist: trusty
+cache:
+  yarn: true
+  directories:
+    - ~/.cache
+before_install:
+  - curl -o- -L https://yarnpkg.com/install.sh | bash
+  - source ~/.bashrc
+script: make test

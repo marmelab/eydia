@@ -5,7 +5,6 @@
         "prettier/react"
     ],
     "plugins": [
-        "prettier",
         "react"
     ],
     "parserOptions": {

@@ -8,7 +8,8 @@
   "license": "MIT",
   "scripts": {
     "precommit": "lint-staged",
-    "lint": "eslint --fix"
+    "lint": "eslint --fix",
+    "test": "echo 'Write tests'"
   },
   "lint-staged": {
     "src/**/*.js": ["yarn run lint", "git add"]
