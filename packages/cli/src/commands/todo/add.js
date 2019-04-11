@@ -7,34 +7,42 @@ import Link from 'ink-link';
 import UnknownCommand from '../../unknown-command';
 import addTodo from '../../api/add-todo';
 
+const STEP_ASK_TITLE = 'ask-title';
+const STEP_SAVING_TODO = 'saving-todo';
+const STEP_EXIT = 'exit';
+
+const ACTION_SET_TITLE = 'set-title';
+const ACTION_SAVE_TODO = 'save-todo';
+const ACTION_SET_SUCCESS = 'set-success';
+
 const initialState = {
-    step: 'ask-title',
+    step: STEP_ASK_TITLE,
     title: '',
 };
 
 const getInitialState = args => ({
     ...initialState,
-    step: args[0] ? 'saving-todo' : initialState.step,
+    step: args[0] ? STEP_SAVING_TODO : initialState.step,
     title: args[0] ? args[0] : initialState.title,
 });
 
 const todoReducer = (state, action) => {
-    if (action.type === 'set-title') {
+    if (action.type === ACTION_SET_TITLE) {
         return {
             ...state,
             title: action.payload,
         };
     }
 
-    if (action.type === 'save-todo') {
+    if (action.type === ACTION_SAVE_TODO) {
         return {
-            step: 'saving-todo',
+            step: STEP_SAVING_TODO,
         };
     }
 
-    if (action.type === 'success') {
+    if (action.type === ACTION_SET_SUCCESS) {
         return {
-            step: 'exit',
+            step: STEP_EXIT,
             link: action.payload,
         };
     }
@@ -44,16 +52,16 @@ const todoReducer = (state, action) => {
 
 const handleActions = async (state, dispatch, onExit) => {
     switch (state.step) {
-        case 'saving-todo': {
+        case STEP_SAVING_TODO: {
             const link = await addTodo(state.title);
             dispatch({
-                type: 'success',
+                type: ACTION_SET_SUCCESS,
                 payload: link,
             });
             return;
         }
 
-        case 'exit': {
+        case STEP_EXIT: {
             onExit();
             return;
         }
@@ -64,9 +72,9 @@ const AddTodo = ({ args, onExit }) => {
     const [state, dispatch] = useReducer(todoReducer, getInitialState(args));
 
     const handleSetTitle = value =>
-        dispatch({ type: 'set-title', payload: value });
+        dispatch({ type: ACTION_SET_TITLE, payload: value });
 
-    const handleAddTodo = () => dispatch({ type: 'save-todo' });
+    const handleAddTodo = () => dispatch({ type: ACTION_SAVE_TODO });
 
     // You can't pass an async function directly to useEffect
     useEffect(() => {
@@ -74,7 +82,7 @@ const AddTodo = ({ args, onExit }) => {
     }, [state]);
 
     switch (state.step) {
-        case 'ask-title': {
+        case STEP_ASK_TITLE: {
             return (
                 <Box flexDirection="column">
                     <Box>Enter your todo title:</Box>
@@ -88,7 +96,7 @@ const AddTodo = ({ args, onExit }) => {
             );
         }
 
-        case 'saving-todo': {
+        case STEP_SAVING_TODO: {
             return (
                 <Box>
                     <Color green>
@@ -99,7 +107,7 @@ const AddTodo = ({ args, onExit }) => {
             );
         }
 
-        case 'exit': {
+        case STEP_EXIT: {
             return (
                 <Box>
                     <Color green>Todo saved!</Color> Open it now with this{' '}
