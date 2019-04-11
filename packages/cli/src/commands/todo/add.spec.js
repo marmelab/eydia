@@ -6,6 +6,8 @@ const wait = timeout => new Promise(resolve => setTimeout(resolve, timeout));
 
 describe('Todo - add', () => {
     test('directly adds the todo if already specified', async () => {
+        // We can't use act yet
+        // https://github.com/vadimdemedes/ink-testing-library/issues/3
         const { lastFrame } = render(
             <AddTodo args={['test']} onExit={jest.fn()} />
         );
