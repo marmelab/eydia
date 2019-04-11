@@ -4,7 +4,7 @@ import Spinner from 'ink-spinner';
 import Link from 'ink-link';
 
 import updateProject from '../../api/update-project';
-import getProjectName from './get-project-name';
+import getProjectName from '../get-project-name';
 import gatherDependencies from './gather-dependencies';
 
 const STEP_WELCOME = 'welcome';
