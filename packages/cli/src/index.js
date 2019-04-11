@@ -7,7 +7,13 @@ import Init from './commands/init';
 import Todo from './commands/todo';
 import UnknownCommand from './unknown-command';
 
-const cli = meow();
+const cli = meow({
+    flags: {
+        debug: {
+            type: 'boolean',
+        },
+    },
+});
 
 const Root = ({ onExit }) => {
     return (
@@ -38,8 +44,8 @@ const Root = ({ onExit }) => {
 render(
     <AppContext.Consumer>
         {({ exit }) => <Root onExit={exit} />}
-    </AppContext.Consumer>
-    // {
-    //     debug: true,
-    // }
+    </AppContext.Consumer>,
+    {
+        debug: cli.flags.debug,
+    }
 );
