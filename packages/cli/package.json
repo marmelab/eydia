@@ -10,7 +10,7 @@
     "build": "rimraf dist && babel src --out-dir dist",
     "precommit": "lint-staged",
     "lint": "eslint --fix",
-    "test": "jest"
+    "test": "jest src"
   },
   "lint-staged": {
     "src/**/*.js": [
