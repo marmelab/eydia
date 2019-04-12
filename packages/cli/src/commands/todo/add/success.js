@@ -4,11 +4,9 @@ import Link from 'ink-link';
 
 const Success = ({ link }) => {
     return (
-        <Box>
-            <Color green>Todo saved!</Color> Open it now with this{' '}
-            <Color cyan>
-                <Link url={link}>link</Link>
-            </Color>
+        <Box flexDirection="column">
+            <Color green>Todo saved!</Color>
+            <Link url={link}>link</Link>
         </Box>
     );
 };

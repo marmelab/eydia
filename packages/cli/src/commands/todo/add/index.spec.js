@@ -3,9 +3,8 @@ import { render } from 'ink-testing-library';
 import AddTodo from './';
 import addTodo from '../../../api/add-todo';
 import getProjectName from '../../get-project-name';
-import { renderToString, wait } from '../../../test-utils';
-import Loading from '../../loading';
-import Success from './success';
+import { wait } from '../../../test-utils';
+import chalk from 'chalk';
 
 jest.mock('../../../api/add-todo');
 jest.mock('../../get-project-name');
@@ -22,18 +21,11 @@ describe('Todo - add', () => {
         const { lastFrame } = render(
             <AddTodo args={['test']} onExit={jest.fn()} />
         );
-        const expected1 = renderToString(
-            <Loading>Saving your todo item...</Loading>
-        );
-        expect(lastFrame()).toEqual(expected1);
+
+        // Use a regex because of the spinner before the text
+        expect(lastFrame()).toMatch(/.+Saving your todo item.../);
         await wait(10);
-        const expected2 = renderToString(
-            <Success
-                link={
-                    'https://eydia.marmelab.com/my-project/todos/18224f21-73e5-4d3a-8715-6e10ae855643'
-                }
-            />
-        );
-        expect(lastFrame()).toEqual(expected2);
+        expect(lastFrame()).toEqual(`${chalk.green('Todo saved!')}
+link (https://eydia.marmelab.com/my-project/todos/18224f21-73e5-4d3a-8715-6e10ae855643)`);
     });
 });

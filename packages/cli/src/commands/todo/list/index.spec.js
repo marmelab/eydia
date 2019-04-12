@@ -3,9 +3,8 @@ import { render } from 'ink-testing-library';
 import ListTodos from './';
 import listTodos from '../../../api/list-todos';
 import getProjectName from '../../get-project-name';
-import { renderToString, wait } from '../../../test-utils';
-import Loading from '../../loading';
-import List from './list';
+import { wait } from '../../../test-utils';
+import chalk from 'chalk';
 
 jest.mock('../../../api/list-todos');
 jest.mock('../../get-project-name');
@@ -36,15 +35,21 @@ describe('Todo - list', () => {
         // https://github.com/vadimdemedes/ink-testing-library/issues/3
         const { lastFrame } = render(<ListTodos onExit={jest.fn()} />);
 
-        const expected1 = renderToString(<Loading>Fetching todos...</Loading>);
-        expect(lastFrame()).toEqual(expected1);
+        // Use a regex because of the spinner before the text
+        expect(lastFrame()).toMatch(/.+Fetching todos.../);
         await wait(10);
 
         expect(getProjectName).toHaveBeenCalled();
         expect(listTodos).toHaveBeenCalledWith('my-project');
 
-        const expected2 = renderToString(<List todos={todos} />);
+        expect(lastFrame()).toEqual(`
+${chalk.cyan('My first todo')}
+link (https://eydia.marmelab.com/my-project/todos/ef8bbf32-98e9-4acd-b8dd-521fd35aa351)
 
-        expect(lastFrame()).toEqual(expected2);
+${chalk.cyan('My second todo')}
+link (https://eydia.marmelab.com/my-project/todos/316e61c1-b6d1-4155-af04-9cd4cf611455)
+
+${chalk.cyan('My third todo')}
+link (https://eydia.marmelab.com/my-project/todos/10daa5be-2b0c-4714-9219-406ca6a72d40)`);
     });
 });
