@@ -21,6 +21,7 @@
   "dependencies": {
     "debug": "^4.1.1",
     "eslint": "^5.16.0",
+    "history": "4.9.0",
     "ink": "^2.1.1",
     "ink-box": "^1.0.0",
     "ink-link": "^1.0.0",
@@ -28,6 +29,7 @@
     "ink-text-input": "^3.1.0",
     "meow": "^5.0.0",
     "react": "^16.8.6",
+    "react-router": "5.0.0",
     "uuid": "^3.3.2"
   },
   "devDependencies": {
