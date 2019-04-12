@@ -1,11 +1,39 @@
 import React, { useReducer, useEffect } from 'react';
-import { Box, Color } from 'ink';
-import Spinner from 'ink-spinner';
-import Link from 'ink-link';
+import { Color } from 'ink';
 
 import updateProject from '../../api/update-project';
 import getProjectName from '../get-project-name';
 import gatherDependencies from './gather-dependencies';
+import Loading from '../loading';
+import Success from './success';
+
+const Init = ({ onExit, projectRoot = process.cwd() }) => {
+    const [state, dispatch] = useReducer(initReducer, initialState);
+
+    useEffect(handleSteps(dispatch, state, onExit, projectRoot), [state]);
+
+    if (state.step === STEP_WELCOME) {
+        return <Loading>Initializing Eydia...</Loading>;
+    }
+
+    if (state.step === STEP_GATHERING_DEPENDENCIES) {
+        return <Loading>Gathering the dependencies...</Loading>;
+    }
+
+    if (state.step === STEP_UPDATING_PROJECT) {
+        return (
+            <Loading>
+                Updating project <Color cyan>{state.projectName}</Color>...
+            </Loading>
+        );
+    }
+
+    if (state.step === STEP_EXIT) {
+        return <Success link={state.link} projectName={state.projectName} />;
+    }
+};
+
+export default Init;
 
 const STEP_WELCOME = 'welcome';
 const STEP_GATHERING_DEPENDENCIES = 'gathering-dependencies';
@@ -102,60 +130,3 @@ const handleSteps = (
         onExit();
     }
 };
-
-const Init = ({ onExit, projectRoot = process.cwd() }) => {
-    const [state, dispatch] = useReducer(initReducer, initialState);
-
-    useEffect(handleSteps(dispatch, state, onExit, projectRoot), [state]);
-
-    if (state.step === STEP_WELCOME) {
-        return (
-            <Box>
-                <Color green>
-                    <Spinner type="dots" />
-                </Color>
-                <Box paddingLeft={1}>Initializing Eydia...</Box>
-            </Box>
-        );
-    }
-
-    if (state.step === STEP_GATHERING_DEPENDENCIES) {
-        return (
-            <Box>
-                <Color green>
-                    <Spinner type="dots" />
-                </Color>
-                <Box paddingLeft={1}>Gathering the dependencies...</Box>
-            </Box>
-        );
-    }
-
-    if (state.step === STEP_UPDATING_PROJECT) {
-        return (
-            <Box>
-                <Color green>
-                    <Spinner type="dots" />
-                </Color>
-                <Box paddingLeft={1}>
-                    Updating project <Color cyan>{state.projectName}</Color>...
-                </Box>
-            </Box>
-        );
-    }
-
-    if (state.step === STEP_EXIT) {
-        return (
-            <Box flexDirection="column">
-                <Color green>Project {state.projectName} saved!</Color>
-                <Box>
-                    Open its page now with this{' '}
-                    <Color cyan>
-                        <Link url={state.link}>link</Link>
-                    </Color>
-                </Box>
-            </Box>
-        );
-    }
-};
-
-export default Init;
