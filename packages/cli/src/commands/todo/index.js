@@ -17,7 +17,7 @@ const Todo = ({ match, onExit }) => (
             path={`${match.url}/list`}
             render={() => <ListTodos onExit={onExit} />}
         />
-        <Redirect from={`${match.url}/`} to={`${match.url}/list`} />
+        <Redirect from={`${match.url}/`} to={`${match.url}/list`} exact />
         <Route component={UnknownCommand} />
     </Switch>
 );

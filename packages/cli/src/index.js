@@ -52,7 +52,7 @@ const Root = ({ onExit }) => {
                             <Init match={match} onExit={onExit} />
                         )}
                     />
-                    <Redirect from="/" to="/init" />
+                    <Redirect from="/" to="/init" exact />
                     <Route component={UnknownCommand} />
                 </Switch>
             </Router>
