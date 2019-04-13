@@ -8,6 +8,7 @@ import { createMemoryHistory } from 'history';
 import Init from './commands/init';
 import Todo from './commands/todo';
 import UnknownCommand from './unknown-command';
+import Help from './help';
 
 const cli = meow({
     flags: {
@@ -60,8 +61,17 @@ const Root = ({ onExit }) => {
                             />
                         )}
                     />
+                    <Route
+                        path="/help"
+                        render={() => (
+                            <UnknownCommand>
+                                <Help />
+                            </UnknownCommand>
+                        )}
+                    />
                     <Redirect from="/" to="/init" exact />
-                    <Route component={UnknownCommand} />
+                    // No match
+                    <Redirect to="/help" />
                 </Switch>
             </Router>
         </>
