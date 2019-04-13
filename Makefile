@@ -11,3 +11,6 @@ build:
 
 test:
 	@yarn workspaces run test
+
+test-cli:
+	@yarn workspace @eydia/cli run test
