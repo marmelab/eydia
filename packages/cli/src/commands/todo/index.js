@@ -5,17 +5,21 @@ import UnknownCommand from '../../unknown-command';
 import AddTodo from './add';
 import ListTodos from './list';
 
-const Todo = ({ match, onExit }) => (
+const Todo = ({ flags, match, onExit }) => (
     <Switch>
         <Route
             path={`${match.url}/add/:title?`}
             render={({ match }) => (
-                <AddTodo title={match.params.title} onExit={onExit} />
+                <AddTodo
+                    title={match.params.title}
+                    onExit={onExit}
+                    flags={flags}
+                />
             )}
         />
         <Route
             path={`${match.url}/list`}
-            render={() => <ListTodos onExit={onExit} />}
+            render={() => <ListTodos onExit={onExit} flags={flags} />}
         />
         <Redirect from={`${match.url}/`} to={`${match.url}/list`} exact />
         <Route component={UnknownCommand} />

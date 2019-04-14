@@ -7,7 +7,7 @@ import getProjectName from '../../get-project-name';
 import AskTitle from './ask-title';
 import Success from './success';
 
-const AddTodo = ({ title, onExit }) => {
+const AddTodo = ({ flags, title, onExit }) => {
     const [state, dispatch] = useReducer(todoReducer, getInitialState(title));
 
     const handleAddTodo = value =>
@@ -15,7 +15,7 @@ const AddTodo = ({ title, onExit }) => {
 
     // You can't pass an async function directly to useEffect
     useEffect(() => {
-        handleActions(state, dispatch, onExit);
+        handleActions(state, dispatch, onExit, flags);
     }, [state]);
 
     switch (state.step) {
@@ -75,10 +75,10 @@ const todoReducer = (state, action) => {
     return state;
 };
 
-const handleActions = async (state, dispatch, onExit) => {
+const handleActions = async (state, dispatch, onExit, flags) => {
     switch (state.step) {
         case STEP_SAVING_TODO: {
-            const projectName = await getProjectName();
+            const projectName = await getProjectName(flags);
             const link = await addTodo({ projectName, title: state.title });
             dispatch({
                 type: ACTION_SET_SUCCESS,

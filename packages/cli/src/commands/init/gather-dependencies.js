@@ -1,7 +1,9 @@
 import { resolve } from 'path';
 import { readdirSync, statSync } from 'fs';
+import getProjectRoot from '../get-project-root';
 
-const gatherDependencies = projectRoot => {
+const gatherDependencies = flags => {
+    const projectRoot = getProjectRoot(flags);
     const packageFiles = getPackageFiles(projectRoot, true);
     const dependencies = gatherAllDependencies(packageFiles);
 

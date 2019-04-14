@@ -10,18 +10,14 @@ describe('getProjectName', () => {
     it('Returns the name of the directory if no git repository is found', async () => {
         const root = tmpdir();
         const name = await getProjectName({
-            currentPath: root,
+            cwd: root,
         });
         expect(name).toEqual('tmp');
     });
 
     it('Returns the name specified through flags', async () => {
         const name = await getProjectName({
-            cliParams: {
-                flags: {
-                    project: 'test',
-                },
-            },
+            project: 'test',
         });
         expect(name).toEqual('test');
     });

@@ -6,12 +6,12 @@ import Loading from '../../loading';
 import Error from '../../error';
 import List from './list';
 
-const ListTodos = ({ onExit }) => {
+const ListTodos = ({ flags, onExit }) => {
     const [state, dispatch] = useReducer(listTodosReducer, initialState);
 
     // You can't pass an async function directly to useEffect
     useEffect(() => {
-        handleListTodosSteps(state, dispatch, onExit);
+        handleListTodosSteps(state, dispatch, onExit, flags);
     }, [state]);
 
     switch (state.step) {
@@ -70,11 +70,11 @@ const listTodosReducer = (state, action) => {
     }
 };
 
-const handleListTodosSteps = async (state, dispatch, onExit) => {
+const handleListTodosSteps = async (state, dispatch, onExit, flags) => {
     switch (state.step) {
         case STEP_LOADING: {
             try {
-                const projectName = await getProjectName();
+                const projectName = await getProjectName(flags);
                 const todos = await listTodos(projectName);
                 dispatch({ type: ACTION_SET_TODOS, payload: todos });
             } catch (error) {
