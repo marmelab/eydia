@@ -6,6 +6,7 @@ import CommandHelp from './command-help';
 import DefaultFlags from './default-flags';
 import HelpHowTo from './help-how-to';
 import { HELP_ROUTE } from './constants';
+import HelpInit from './commands/init/help';
 
 const Help = ({ match }) => {
     if (match.params.command) {
@@ -20,11 +21,7 @@ const Help = ({ match }) => {
 
     return (
         <>
-            <CommandHelp commands={['eydia', 'eydia init']}>
-                <CommandHelp.Description>
-                    Initialize eydia for the current project
-                </CommandHelp.Description>
-            </CommandHelp>
+            <HelpInit />
             <TodoHelp />
             <CommandHelp.Flags intro="All commands accept the following flags:">
                 <DefaultFlags />
