@@ -84,7 +84,7 @@ const initReducer = (state, action) => {
 };
 
 const handleWelcomeStep = async (dispatch, flags) => {
-    const projectName = getProjectName(flags);
+    const projectName = await getProjectName(flags);
 
     setTimeout(
         () => dispatch({ type: ACTION_SET_PROJECT_NAME, payload: projectName }),
@@ -93,7 +93,7 @@ const handleWelcomeStep = async (dispatch, flags) => {
 };
 
 const handleGatherDependenciesStep = async (dispatch, flags) => {
-    const dependencies = gatherDependencies(flags);
+    const dependencies = await gatherDependencies(flags);
     setTimeout(
         () => dispatch({ type: ACTION_UPDATE_PROJECT, payload: dependencies }),
         2000
