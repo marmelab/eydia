@@ -5,9 +5,16 @@ import UnknownCommand from '../../unknown-command';
 import AddTodo from './add';
 import ListTodos from './list';
 import Help from './help';
+import TodoAddHelp from './add/help';
+import TodoListHelp from './list/help';
+import HelpHowTo from '../../help-how-to';
 
 const Todo = ({ flags, match, onExit }) => (
     <Switch>
+        <Route
+            path={`${match.url}/add/help`}
+            render={() => <TodoAddHelp showFlags />}
+        />
         <Route
             path={`${match.url}/add/:title?`}
             render={({ match }) => (
@@ -19,6 +26,10 @@ const Todo = ({ flags, match, onExit }) => (
             )}
         />
         <Route
+            path={`${match.url}/list/help`}
+            render={() => <TodoListHelp showFlags />}
+        />
+        <Route
             path={`${match.url}/list`}
             render={() => <ListTodos onExit={onExit} flags={flags} />}
         />
@@ -26,13 +37,21 @@ const Todo = ({ flags, match, onExit }) => (
         <Route
             path={`${match.url}/help`}
             render={() => (
-                <UnknownCommand command="todo">
-                    <Help />
-                </UnknownCommand>
+                <>
+                    <Help showDefaultFlags />
+                    <HelpHowTo />
+                </>
             )}
         />
         // No match
-        <Redirect to={`${match.url}/help`} />
+        <Route
+            render={() => (
+                <UnknownCommand>
+                    <Help />
+                    <HelpHowTo />
+                </UnknownCommand>
+            )}
+        />
     </Switch>
 );
 

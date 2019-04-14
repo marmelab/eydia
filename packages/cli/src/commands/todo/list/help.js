@@ -1,9 +1,17 @@
 import React from 'react';
 import CommandHelp from '../../../command-help';
+import DefaultFlags from '../../../default-flags';
 
-const TodoListHelp = () => (
+const TodoListHelp = ({ showFlags = false }) => (
     <CommandHelp commands={['eydia todo', 'eydia todo list']}>
-        Show all the todos for the current project
+        <CommandHelp.Description>
+            Show all the todos for the current project
+        </CommandHelp.Description>
+        {showFlags ? (
+            <CommandHelp.Flags>
+                <DefaultFlags />
+            </CommandHelp.Flags>
+        ) : null}
     </CommandHelp>
 );
 

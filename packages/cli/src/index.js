@@ -62,16 +62,18 @@ const Root = ({ onExit }) => {
                         )}
                     />
                     <Route
-                        path="/help"
+                        path="/help/:command*"
+                        render={({ match }) => <Help match={match} />}
+                    />
+                    <Redirect from="/" to="/init" exact />
+                    // No match
+                    <Route
                         render={() => (
                             <UnknownCommand>
                                 <Help />
                             </UnknownCommand>
                         )}
                     />
-                    <Redirect from="/" to="/init" exact />
-                    // No match
-                    <Redirect to="/help" />
                 </Switch>
             </Router>
         </>
