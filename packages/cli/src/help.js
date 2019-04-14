@@ -5,10 +5,17 @@ import TodoHelp from './commands/todo/help';
 import CommandHelp from './command-help';
 import DefaultFlags from './default-flags';
 import HelpHowTo from './help-how-to';
+import { HELP_ROUTE } from './constants';
 
 const Help = ({ match }) => {
     if (match.params.command) {
-        return <Redirect to={`/${match.params.command}/help`} />;
+        /*
+            Using the HELP_ROUTE allows us to accept commands such as `eydia add help`
+            which will add a todo with title `help`
+
+            All sub commands help routes should use this constant for their path
+        */
+        return <Redirect to={`/${match.params.command}/${HELP_ROUTE}`} />;
     }
 
     return (

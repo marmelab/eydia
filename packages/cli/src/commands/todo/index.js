@@ -8,11 +8,16 @@ import Help from './help';
 import TodoAddHelp from './add/help';
 import TodoListHelp from './list/help';
 import HelpHowTo from '../../help-how-to';
+import { HELP_ROUTE } from '../../constants';
 
 const Todo = ({ flags, match, onExit }) => (
     <Switch>
+        {/*
+            Using the HELP_ROUTE allows us to accept commands such as `eydia add help`
+            which will add a todo with title `help`
+        */}
         <Route
-            path={`${match.url}/add/help`}
+            path={`${match.url}/add/${HELP_ROUTE}`}
             render={() => <TodoAddHelp showFlags />}
         />
         <Route
@@ -26,7 +31,7 @@ const Todo = ({ flags, match, onExit }) => (
             )}
         />
         <Route
-            path={`${match.url}/list/help`}
+            path={`${match.url}/list/${HELP_ROUTE}`}
             render={() => <TodoListHelp showFlags />}
         />
         <Route
@@ -35,7 +40,7 @@ const Todo = ({ flags, match, onExit }) => (
         />
         <Redirect from={`${match.url}/`} to={`${match.url}/list`} exact />
         <Route
-            path={`${match.url}/help`}
+            path={`${match.url}/${HELP_ROUTE}`}
             render={() => (
                 <>
                     <Help showDefaultFlags />
