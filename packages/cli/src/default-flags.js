@@ -8,7 +8,7 @@ const DefaultFlags = () => (
             current one.
         </CommandHelp.Flag>
         <CommandHelp.Flag name="project">
-            Sets the project name. Default is the current gir repository if
+            Sets the project name. Default is the current git repository if
             found or the current directory name.
         </CommandHelp.Flag>
     </>
