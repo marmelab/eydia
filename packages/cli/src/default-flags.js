@@ -4,8 +4,7 @@ import CommandHelp from './command-help';
 const DefaultFlags = () => (
     <>
         <CommandHelp.Flag name="cwd">
-            Sets the directory into which to execute the command. Default is the
-            current one.
+            Sets the working directory. Default is the current one.
         </CommandHelp.Flag>
         <CommandHelp.Flag name="project">
             Sets the project name. Default is the current git repository if
