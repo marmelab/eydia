@@ -6,9 +6,11 @@ import { Router, Route, Switch, Redirect } from 'react-router';
 import { createMemoryHistory } from 'history';
 
 import Init from './commands/init';
+import HelpInit from './commands/init/help';
 import Todo from './commands/todo';
 import UnknownCommand from './unknown-command';
 import Help from './help';
+import { HELP_ROUTE } from './constants';
 
 const cli = meow({
     flags: {
@@ -52,6 +54,10 @@ const Root = ({ onExit }) => {
                         )}
                     />
                     <Route
+                        path={`/init/${HELP_ROUTE}`}
+                        render={() => <HelpInit showFlags />}
+                    />
+                    <Route
                         path="/init"
                         render={({ match }) => (
                             <Init
@@ -62,16 +68,18 @@ const Root = ({ onExit }) => {
                         )}
                     />
                     <Route
-                        path="/help"
+                        path="/help/:command*"
+                        render={({ match }) => <Help match={match} />}
+                    />
+                    <Redirect from="/" to="/init" exact />
+                    // No match
+                    <Route
                         render={() => (
                             <UnknownCommand>
                                 <Help />
                             </UnknownCommand>
                         )}
                     />
-                    <Redirect from="/" to="/init" exact />
-                    // No match
-                    <Redirect to="/help" />
                 </Switch>
             </Router>
         </>

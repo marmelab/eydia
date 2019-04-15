@@ -11,7 +11,7 @@ describe('CommandHelp', () => {
 
         expect(lastFrame()).toEqual(`
 ${chalk.grey('eydia')}
-An help text`);
+    An help text`);
     });
 
     test('displays multipe commands correctly', async () => {
@@ -23,6 +23,6 @@ An help text`);
 
         expect(lastFrame()).toEqual(`
 ${chalk.grey('eydia')} or ${chalk.grey('eydia init')}
-An help text`);
+    An help text`);
     });
 });
