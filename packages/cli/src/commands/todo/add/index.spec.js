@@ -19,7 +19,7 @@ describe('Todo - add', () => {
         // We can't use act yet
         // https://github.com/vadimdemedes/ink-testing-library/issues/3
         const { lastFrame } = render(
-            <AddTodo args={['test']} onExit={jest.fn()} />
+            <AddTodo title="test" onExit={jest.fn()} />
         );
 
         // Use a regex because of the spinner before the text

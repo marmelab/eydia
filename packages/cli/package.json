@@ -10,7 +10,7 @@
     "build": "rimraf dist && babel src --out-dir dist",
     "precommit": "lint-staged",
     "lint": "eslint --fix",
-    "test": "jest"
+    "test": "node scripts/test"
   },
   "lint-staged": {
     "src/**/*.js": [
@@ -21,6 +21,7 @@
   "dependencies": {
     "debug": "^4.1.1",
     "eslint": "^5.16.0",
+    "history": "4.9.0",
     "ink": "^2.1.1",
     "ink-box": "^1.0.0",
     "ink-link": "^1.0.0",
@@ -28,6 +29,7 @@
     "ink-text-input": "^3.1.0",
     "meow": "^5.0.0",
     "react": "^16.8.6",
+    "react-router": "5.0.0",
     "uuid": "^3.3.2"
   },
   "devDependencies": {
@@ -40,8 +42,12 @@
     "eslint-plugin-jest": "^22.4.1",
     "eslint-plugin-react": "^7.12.4",
     "ink-testing-library": "^1.0.1",
+    "is-ci": "^2.0.0",
     "jest": "^24.7.1",
     "react-test-renderer": "16.8.6",
     "rimraf": "^2.6.3"
+  },
+  "jest": {
+    "testPathIgnorePatterns": ["/node_modules/", "dist", "scripts"]
   }
 }

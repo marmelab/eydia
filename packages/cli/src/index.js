@@ -2,6 +2,8 @@ import React from 'react';
 import { render, AppContext } from 'ink';
 import BigBox from 'ink-box';
 import meow from 'meow';
+import { Router, Route, Switch, Redirect } from 'react-router';
+import { createMemoryHistory } from 'history';
 
 import Init from './commands/init';
 import Todo from './commands/todo';
@@ -15,6 +17,16 @@ const cli = meow({
     },
 });
 
+// It needs a leading backslash
+// We simply join each commands with a backslash
+// Example: eydia todo add
+// initialRoute = /todo/add
+const initialRoute = `/${cli.input.join('/')}`;
+
+const history = createMemoryHistory({
+    initialEntries: [initialRoute],
+});
+
 const Root = ({ onExit }) => {
     return (
         <>
@@ -26,17 +38,24 @@ const Root = ({ onExit }) => {
             >
                 Eydia - Share Knowledge without friction
             </BigBox>
-            {cli.input.length === 0 ? (
-                <Init onExit={onExit} />
-            ) : cli.input[0] === 'todo' ? (
-                <Todo
-                    command={cli.input[1]}
-                    args={cli.input.slice(2)}
-                    onExit={onExit}
-                />
-            ) : (
-                <UnknownCommand />
-            )}
+            <Router history={history}>
+                <Switch>
+                    <Route
+                        path="/todo"
+                        render={({ match }) => (
+                            <Todo match={match} onExit={onExit} />
+                        )}
+                    />
+                    <Route
+                        path="/init"
+                        render={({ match }) => (
+                            <Init match={match} onExit={onExit} />
+                        )}
+                    />
+                    <Redirect from="/" to="/init" exact />
+                    <Route component={UnknownCommand} />
+                </Switch>
+            </Router>
         </>
     );
 };

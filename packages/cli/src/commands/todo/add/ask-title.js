@@ -3,7 +3,7 @@ import { Box } from 'ink';
 import TextInput from 'ink-text-input';
 
 const AskTitle = ({ onSubmit }) => {
-    const [title, setTitle] = useState();
+    const [title, setTitle] = useState('');
 
     const handleSubmit = () => onSubmit(title);
 

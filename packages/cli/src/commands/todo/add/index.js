@@ -7,8 +7,8 @@ import getProjectName from '../../get-project-name';
 import AskTitle from './ask-title';
 import Success from './success';
 
-const AddTodo = ({ args, onExit }) => {
-    const [state, dispatch] = useReducer(todoReducer, getInitialState(args));
+const AddTodo = ({ title, onExit }) => {
+    const [state, dispatch] = useReducer(todoReducer, getInitialState(title));
 
     const handleAddTodo = value =>
         dispatch({ type: ACTION_SAVE_TODO, payload: value });
@@ -51,10 +51,10 @@ const initialState = {
     title: '',
 };
 
-const getInitialState = args => ({
+const getInitialState = title => ({
     ...initialState,
-    step: args[0] ? STEP_SAVING_TODO : initialState.step,
-    title: args[0] ? args[0] : initialState.title,
+    step: title ? STEP_SAVING_TODO : initialState.step,
+    title: title ? title : initialState.title,
 });
 
 const todoReducer = (state, action) => {
