@@ -43,13 +43,21 @@ const Root = ({ onExit }) => {
                     <Route
                         path="/todo"
                         render={({ match }) => (
-                            <Todo match={match} onExit={onExit} />
+                            <Todo
+                                match={match}
+                                onExit={onExit}
+                                flags={cli.flags}
+                            />
                         )}
                     />
                     <Route
                         path="/init"
                         render={({ match }) => (
-                            <Init match={match} onExit={onExit} />
+                            <Init
+                                match={match}
+                                onExit={onExit}
+                                flags={cli.flags}
+                            />
                         )}
                     />
                     <Redirect from="/" to="/init" exact />

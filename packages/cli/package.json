@@ -21,6 +21,7 @@
   "dependencies": {
     "debug": "^4.1.1",
     "eslint": "^5.16.0",
+    "execa": "^1.0.0",
     "history": "4.9.0",
     "ink": "^2.1.1",
     "ink-box": "^1.0.0",
@@ -48,6 +49,10 @@
     "rimraf": "^2.6.3"
   },
   "jest": {
-    "testPathIgnorePatterns": ["/node_modules/", "dist", "scripts"]
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "dist",
+      "scripts"
+    ]
   }
 }

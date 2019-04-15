@@ -7,10 +7,10 @@ import gatherDependencies from './gather-dependencies';
 import Loading from '../loading';
 import Success from './success';
 
-const Init = ({ onExit, projectRoot = process.cwd() }) => {
+const Init = ({ onExit, flags }) => {
     const [state, dispatch] = useReducer(initReducer, initialState);
 
-    useEffect(handleSteps(dispatch, state, onExit, projectRoot), [state]);
+    useEffect(handleSteps(dispatch, state, onExit, flags), [state]);
 
     if (state.step === STEP_WELCOME) {
         return <Loading>Initializing Eydia...</Loading>;
@@ -83,8 +83,8 @@ const initReducer = (state, action) => {
     }
 };
 
-const handleWelcomeStep = async (dispatch, projectRoot) => {
-    const projectName = getProjectName(projectRoot);
+const handleWelcomeStep = async (dispatch, flags) => {
+    const projectName = await getProjectName(flags);
 
     setTimeout(
         () => dispatch({ type: ACTION_SET_PROJECT_NAME, payload: projectName }),
@@ -92,8 +92,8 @@ const handleWelcomeStep = async (dispatch, projectRoot) => {
     );
 };
 
-const handleGatherDependenciesStep = async (dispatch, projectRoot) => {
-    const dependencies = gatherDependencies(projectRoot);
+const handleGatherDependenciesStep = async (dispatch, flags) => {
+    const dependencies = await gatherDependencies(flags);
     setTimeout(
         () => dispatch({ type: ACTION_UPDATE_PROJECT, payload: dependencies }),
         2000
@@ -112,14 +112,14 @@ const handleSteps = (
     dispatch,
     { step, projectName, dependencies },
     onExit,
-    projectRoot
+    flags
 ) => () => {
     if (step === STEP_WELCOME) {
-        handleWelcomeStep(dispatch, projectRoot);
+        handleWelcomeStep(dispatch, flags);
     }
 
     if (step === STEP_GATHERING_DEPENDENCIES) {
-        handleGatherDependenciesStep(dispatch, projectRoot);
+        handleGatherDependenciesStep(dispatch, flags);
     }
 
     if (step === STEP_UPDATING_PROJECT) {
